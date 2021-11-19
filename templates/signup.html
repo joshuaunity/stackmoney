@@ -36,12 +36,24 @@
 
     <div class="cotainer">
         <div class="col-6 center">
-            <h3 style="margin-top: 10%;">Log In</h3>
-            <form method="POST" action="login">
+            <h3 style="margin-top: 10%;">Sign Up</h3>
+
+            {% for message in messages %}
+            <div class="alert alert-secondary" role="alert">
+                {{ message }}
+            </div>
+            {% endfor %}
+
+            <form method="POST" action="signup">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="inputUsername" class="form-label">Email address</label>
-                    <input type="text" name="username"  class="form-control" id="inputUsername" aria-describedby="emailHelp">
+                    <label for="inputUsername" class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" id="inputUsername">
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Email address</label>
+                    <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
                     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div class="mb-3">
@@ -49,9 +61,14 @@
                     <input type="password" name="password" class="form-control" id="inputpassword">
                 </div>
 
-                <div id="emailHelp" class="form-text pb-2">I don't have an account <a href="signup">Sign Up</a>.</div>
+                <div class="mb-3">
+                    <label for="inputconfirmpassword" class="form-label">Confirm Password</label>
+                    <input type="password" name="confirmpassword" class="form-control" id="inputconfirmpassword">
+                </div>
 
-                <button type="submit" class="btn btn-primary">Log In</button>
+                <div id="emailHelp" class="form-text pb-2">I already have an account <a href="/">Log In</a>.</div>
+
+                <button type="submit" class="btn btn-primary">Sign Up</button>
             </form>
         </div>
     </div>
