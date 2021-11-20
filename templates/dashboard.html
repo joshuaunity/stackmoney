@@ -18,14 +18,12 @@
     <section id="body-pd">
         <header class="header d-flex justify-content-between" id="header">
             <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i>
-                <span class="fw-bold">Dashboard</span>
+                <span class="fw-bold">Dashboard </span>
             </div>
 
-            <div class="d-flex justify-content-between" style="width: 12%;">
+            <div class="d-flex justify-content-between" style="">
 
-                <div class="header_img">
-                    <img src="{% static 'assets/images/profilepic.jpeg' %}" alt="">
-                </div>
+                <!-- <span class="fw-bold">Dashboard </span> -->
 
                 <a class="btn site-btn" href="logout">Log Out <i class='bx bx-log-out' style="font-size: medium;"></i>
                 </a>
@@ -62,7 +60,7 @@
                 </div>
                 {% endfor %}
                 <div class="text-center shadow-sm p-5 rounded" style="background-color: var(--first-color);">
-                    <h3 class="text-white">Create a new transaction</h3>
+                    <h3 class="text-white">Hi, {{user.username}} will you like to create a new transaction</h3>
                     <button type="button" class="btn site-btn btn-lg border border-2" data-bs-toggle="modal"
                         data-bs-target="#transactionModal">
                         Create Transaction <i class="bi bi-plus"></i>

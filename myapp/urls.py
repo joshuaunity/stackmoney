@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import TransView
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -9,5 +11,9 @@ urlpatterns = [
     path('dashboard', views.dashboard, name='dashboard'),
     path('transaction.create', views.create_transaction, name='createtransaction'),
     path('download/<str:id>', views.download_receipt, name='download_receipt'),
-    # path('download/<str:id>', views.generate_pdf, name='generatepdf'),
+    
+    
+    path('api/transaction', TransView.as_view(), name='transaction'),
+    path('api/token', obtain_auth_token, name='gettoken'),
+    
 ]
