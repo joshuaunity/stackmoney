@@ -7,5 +7,5 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = (
-            'user', 'name', 'price', 'ref'
+            'user', 'name', 'price', 'ref', 'phone', 'address'
         )

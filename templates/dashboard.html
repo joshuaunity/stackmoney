@@ -107,11 +107,21 @@
                     </div>
                     <div class="modal-body">
 
-                        <form method="POST" action="transaction.create">
+                        <form method="POST" action="createtransaction">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="itemName" class="form-label">Item name</label>
                                 <input type="text" name="name" class="form-control" id="itemName"
+                                    aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Phone" class="form-label">Phone number</label>
+                                <input type="number" name="phone" class="form-control" id="Phone"
+                                    aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Address" class="form-label">Address</label>
+                                <input type="text" name="address" class="form-control" id="Address"
                                     aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3">
