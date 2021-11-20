@@ -5,9 +5,45 @@ from django.contrib import messages
 from .models import Transaction
 import random, string
 from stackmoney.utils import render_to_pdf 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from .serializers import TransactionSerializer
+import io
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
 
-
-re_path = ""
+class TransView(APIView):
+    
+    permission_classes = (
+        IsAuthenticated,
+    )
+    
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        transactions = Transaction.objects.filter(user_id=user.id)
+        serializer = TransactionSerializer(transactions, many=True)
+        return Response(serializer.data)
+        
+    def post(self, request, *args, **kwargs):
+        name = request.POST['name']
+        price = request.POST['price']
+        user = request.user
+        ref = get_random_string(20)
+        transaction = Transaction(user=user ,name=name, price=price, ref=ref)
+        # transaction.save()
+ 
+        serializer = TransactionSerializer(transaction)
+        content = JSONRenderer().render(serializer.data)
+        stream = io.BytesIO(content)
+        data = JSONParser().parse(stream)
+        serializer = TransactionSerializer(data=data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        else:
+            return Response(serializer.errors, status=400)
 
 # Create your views here.
 def get_random_string(length):
@@ -15,8 +51,7 @@ def get_random_string(length):
     result_str = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(length))
     # print random string
     return result_str
-
-    
+  
 def generate_pdf(id, download):
     transaction = Transaction.objects.get(pk=id)
     data = {
