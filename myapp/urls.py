@@ -8,5 +8,6 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('transaction.create', views.create_transaction, name='createtransaction'),
-    # path('post/<str:title>', views.post, name='post'),
+    path('download/<str:id>', views.download_receipt, name='download_receipt'),
+    # path('download/<str:id>', views.generate_pdf, name='generatepdf'),
 ]

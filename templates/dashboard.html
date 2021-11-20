@@ -81,8 +81,10 @@
                         <!-- T1XAHL6HvDEUQpGmvjfq -->
                         <span> {{transaction.name}} | {{transaction.ref}}</span>
                         <div>
-                            <i class="bi bi-download" title="Download Reciepts"
-                                style="color: var(--first-color); -webkit-text-stroke: 0.5px; padding-right: 12px;"></i>
+                            <a href="download/{{transaction.id}}?download=true">
+                                <i class="bi bi-download" title="Download Reciepts"
+                                    style="color: var(--first-color); -webkit-text-stroke: 0.5px; padding-right: 12px;"></i>
+                            </a>
                             <i class="bi bi-info-circle" title="Info"
                                 style="color: var(--first-color); -webkit-text-stroke: 0.5px;"></i>
                         </div>
