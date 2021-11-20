@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, response
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from .models import Transaction
 import random, string
+from stackmoney.utils import render_to_pdf 
 
 
+re_path = ""
 
 # Create your views here.
 def get_random_string(length):
@@ -13,6 +15,40 @@ def get_random_string(length):
     result_str = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(length))
     # print random string
     return result_str
+
+    
+def generate_pdf(id, download):
+    transaction = Transaction.objects.get(pk=id)
+    data = {
+            # 'id': transaction.id, 
+            'name': transaction.name, 
+            'ref': transaction.ref,
+            'address': transaction.address,
+            'price': "{:,.2f}".format(transaction.price),
+            'total': transaction.price,
+            'date': transaction.created_at,
+    }
+    
+    pdf = render_to_pdf('pdf/invoice.html', data)
+    if pdf:
+        response = HttpResponse(pdf, content_type='application/pdf')
+        filename = f"{data['name']}_%s.pdf" %("Receipt")
+        content = "inline; filename='%s'" %(filename)
+        # download = req.GET.get("download")
+        if download:
+            content = "attachment; filename='%s'" %(filename)
+        response['Content-Disposition'] = content
+        return response
+    return HttpResponse("Not found")
+
+    # return HttpResponse(pdf, content_type='application/pdf')
+    
+def download_receipt(request, id):
+        download = request.GET.get("download")
+        if download:
+            return generate_pdf(id=id, download=True)
+    #  domain = Site.objects.get_current().domain
+    #  url = 'http://{domain}/download/{id}'.format(domain=domain)
     
 def index(request):
     return render(request, 'index.html')

@@ -9,6 +9,7 @@ class Transaction(models.Model):
     name = models.CharField(max_length=30) 
     price = models.IntegerField() 
     ref = models.CharField(max_length=30) 
+    address = models.CharField(max_length=30, default="4567 7820 3223 0098") 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
