@@ -9,7 +9,11 @@ urlpatterns = [
     path('signup', views.signup, name='signup'),
     path('logout', views.logout, name='logout'),
     path('dashboard', views.dashboard, name='dashboard'),
+<<<<<<< HEAD
+    path('createtransaction', views.create_transaction, name='createtransaction'),
+=======
     path('transaction/create', views.create_transaction, name='createtransaction'),
+>>>>>>> 3eeda6bfb306701642e08c33e84fc02ffa934b7d
     path('download/<str:id>', views.download_receipt, name='download_receipt'),
     
     
