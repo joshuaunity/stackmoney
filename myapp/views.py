@@ -13,11 +13,7 @@ from django.contrib.auth.decorators import login_required
 import io
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
-<<<<<<< HEAD
-from pprint import pprint
-=======
 from django.contrib.auth.decorators import login_required
->>>>>>> 3eeda6bfb306701642e08c33e84fc02ffa934b7d
 
 # transaction api class
 class TransView(APIView):
@@ -122,11 +118,7 @@ def create_transaction(request):
             return redirect('dashboard')
         else:
             user = request.user
-<<<<<<< HEAD
-            transaction = Transaction(user=user ,name=name, price=price, phone=phone, ref=get_random_string(20), address=address)
-=======
             transaction = Transaction(user=user ,name=name, price=price, ref=get_random_string(20))
->>>>>>> 3eeda6bfb306701642e08c33e84fc02ffa934b7d
             messages.info(request, 'Your transaction has been created successfully')
             transaction.save()
             return redirect('dashboard')
