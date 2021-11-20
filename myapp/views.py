@@ -12,6 +12,7 @@ from .serializers import TransactionSerializer
 import io
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
+from django.contrib.auth.decorators import login_required
 
 class TransView(APIView):
     
@@ -88,6 +89,7 @@ def download_receipt(request, id):
 def index(request):
     return render(request, 'index.html')
 
+@login_required(login_url='/')
 def dashboard(request):
     user = request.user
     transactions = Transaction.objects.filter(user_id=user.id)
@@ -103,7 +105,6 @@ def create_transaction(request):
             return redirect('dashboard')
         else:
             user = request.user
-            # transaction = Transaction.objects.create_transaction(name=name, price=price)
             transaction = Transaction(user=user ,name=name, price=price, ref=get_random_string(20))
             messages.info(request, 'Your transaction has been created successfully')
             transaction.save()

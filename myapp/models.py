@@ -7,9 +7,10 @@ class Transaction(models.Model):
     id = models.IntegerField(primary_key = True) 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=30) 
-    price = models.IntegerField() 
-    ref = models.CharField(max_length=30) 
-    address = models.CharField(max_length=30, default="4567 7820 3223 0098") 
+    price = models.IntegerField(null=True) 
+    phone = models.IntegerField(default="0701234803") 
+    ref = models.CharField(max_length=30, null=True) 
+    address = models.CharField(max_length=30, default="123, Saint mark Street") 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

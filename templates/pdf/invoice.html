@@ -1,57 +1,81 @@
 {% load static %}
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 
 <head>
+    <title>{{name}} | Receipt </title>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <link rel="stylesheet" href="{% static 'templates/css/base.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'templates/css/fancy.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'templates/cs/main.css' %}" />
-    <script src="{% static 'templates/js/compatibility.min.js' %}"></script>
-    <script src="{% static 'templates/js/theViewer.min.js' %}"></script>
-    <script>
-        try {
-            theViewer.defaultViewer = new theViewer.Viewer({});
-        } catch (e) { }
-    </script>
-    <title>StackMoney</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-32" />
+    <br />
+    <style type="text/css">
+        <!--
+        p {
+            margin: 0;
+            padding: 0;
+        }
 
+        .ft10 {
+            font-size: 28px;
+            font-family: Times;
+            color: #2f7fc3;
+        }
+
+        .ft11 {
+            font-size: 13px;
+            font-family: Times;
+            color: #2f7fc3;
+        }
+
+        .ft12 {
+            font-size: 13px;
+            font-family: Times;
+            color: #000000;
+        }
+
+        .ft13 {
+            font-size: 13px;
+            font-family: Times;
+            color: #ffffff;
+        }
+
+        .ft14 {
+            font-size: 16px;
+            font-family: Times;
+            color: #2f7fc3;
+        }
+
+        .ft15 {
+            font-size: 16px;
+            font-family: Times;
+            color: #000000;
+        }
+        -->
+    </style>
 </head>
 
-<body>
-    <div id="sidebar">
-        <div id="outline">
-        </div>
-    </div>
-    <div id="page-container">
-        <div id="pf1" class="pf w0 h0" data-page-no="1">
-            <div class="pc pc1 w0 h0"><img class="bi x0 y0 w0 h0" alt=""
-                    src="{% static 'templates/images/bg1.png' %}" />
-                <div class="c x0 y1 w0 h1">
-                    <div class="t m0 x1 h2 y2 ff1 fs0 fc0 sc0 ls0 ws0" style="color: #4723d9;">StackMoney</div>
-                    <div class="t m0 x1 h3 y3 ff2 fs1 fc0 sc0 ls0 ws0">Bill To<span class="_ _0"> </span>Receipt #<span
-                            class="_ _1"> </span><span class="ff3 fc1">100</span></div>
-                    <div class="t m0 x1 h3 y4 ff3 fs1 fc1 sc0 ls0 ws0">{{ address }}</div>
-                    <div class="t m0 x2 h3 y5 ff2 fs1 fc0 sc0 ls0 ws0">Receipt Date<span class="_ _2"> </span><span
-                            class="ff3 fc1">{{date|date:'Y-m-d'}}</span></div>
-                    <div class="t m0 x3 h3 y6 ff2 fs1 fc2 sc0 ls0 ws0">Description<span class="_ _3"> </span>Amount
-                    </div>
-                    <div class="t m0 x4 h3 y7 ff3 fs1 fc1 sc0 ls0 ws0">{{name}}<span class="_ _4">
-                        </span>&#8358; {{price}}
-                    </div>
-                    <div class="t m0 x5 h4 y8 ff2 fs2 fc0 sc0 ls0 ws0">Receipt Total<span class="_ _5"> </span><span
-                            class="ff3 fc1">0xE2 0x82 0xA6; {{total}}</span></div>
-                    <div class="t m0 x1 h3 y9 ff2 fs1 fc0 sc0 ls0 ws0">Terms &amp; Conditions</div>
-                    <div class="t m0 x1 h3 ya ff3 fs1 fc1 sc0 ls0 ws0">Payment is due within 15 days</div>
-                </div>
-            </div>
-            <div class="pi" data-data='{"ctm":[1.000000,0.000000,0.000000,1.000000,0.000000,0.000000]}'></div>
-        </div>
-    </div>
-    <div class="loading-indicator">
-
+<body bgcolor="#A0A0A0" vlink="blue" link="blue">
+    <div id="page1-div" style="position:relative;width:892px;height:1263px;">
+        <img width="892" height="1263" src="{% static 'assets/images/target001.png' %}" alt="background image" />
+        <p style="position:absolute;top:127px;left:108px;white-space:nowrap" class="ft10">StackMoney</p>
+        <p style="position:absolute;top:249px;left:108px;white-space:nowrap" class="ft11"><b>Bill&#160;To</b></p>
+        <p style="position:absolute;top:249px;left:563px;white-space:nowrap" class="ft11"><b>Receipt&#160;#</b></p>
+        <p style="position:absolute;top:249px;left:756px;white-space:nowrap" class="ft12">100</p>
+        <p style="position:absolute;top:280px;left:108px;white-space:nowrap" class="ft12">
+            {{ address }}</p>
+        <p style="position:absolute;top:283px;left:539px;white-space:nowrap" class="ft11"><b>Receipt&#160;Date</b></p>
+        <p style="position:absolute;top:283px;left:706px;white-space:nowrap" class="ft12">{{date|date:'Y-m-d'}}</p>
+        <p style="position:absolute;top:357px;left:327px;white-space:nowrap" class="ft13"><b>Description</b></p>
+        <p style="position:absolute;top:357px;left:707px;white-space:nowrap" class="ft13"><b>Amount</b></p>
+        <p style="position:absolute;top:394px;left:113px;white-space:nowrap" class="ft12">{{name}}</p>
+        <p style="position:absolute;top:394px;left:706px;white-space:nowrap" class="ft12">{{ amount }}</p>
+        <p style="position:absolute;top:431px;left:517px;white-space:nowrap" class="ft14"><b>Receipt&#160;Total</b></p>
+        <p style="position:absolute;top:431px;left:676px;white-space:nowrap" class="ft15">₦&#160;{{total}}</p>
+        <p style="position:absolute;top:903px;left:108px;white-space:nowrap" class="ft11">
+            <b>Terms&#160;&amp;&#160;Conditions</b>
+        </p>
+        <p style="position:absolute;top:929px;left:108px;white-space:nowrap" class="ft12">
+            Payment&#160;is&#160;due&#160;within&#160;15&#160;days</p>
     </div>
 </body>
 

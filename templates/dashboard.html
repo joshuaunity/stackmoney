@@ -76,12 +76,14 @@
 
                     {% for transaction in transactions %}
                     <div class="col-12 site-border border border-2 d-flex justify-content-between p-2 mb-2 rounded">
-                        <!-- T1XAHL6HvDEUQpGmvjfq -->
                         <span> {{transaction.name}} | {{transaction.ref}}</span>
                         <div>
-                            <a href="download/{{transaction.id}}?download=true">
-                                <i class="bi bi-download" title="Download Reciepts"
+                            <a href="#" onclick="iconClick()">
+                                <i class="bi bi-download" title="Download Reciepts" class="btn1"
                                     style="color: var(--first-color); -webkit-text-stroke: 0.5px; padding-right: 12px;"></i>
+                            </a>
+
+                            <a href="download/{{transaction.id}}?download=true" style="display: none;" class="btn2" id="multiclick">
                             </a>
                             <i class="bi bi-info-circle" title="Info"
                                 style="color: var(--first-color); -webkit-text-stroke: 0.5px;"></i>
@@ -89,7 +91,23 @@
                     </div>
                     {% endfor %}
 
+                    <script src="">
 
+                        const link = document.getElementById('multiclick');
+
+                        function iconClick() {
+                            console.log("worked");
+                            debug.log("worked");
+                            // link.click();
+                            // alert('worked' + i);
+
+
+                            // for (let i = 0; i < 3; i++) {
+                            //     alert('worked' + i);
+                            //     link.click();
+                            // }
+                        }
+                    </script>
 
                 </div>
             </div>
@@ -107,7 +125,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <form method="POST" action="transaction.create">
+                        <form method="POST" action="transaction/create">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="itemName" class="form-label">Item name</label>
