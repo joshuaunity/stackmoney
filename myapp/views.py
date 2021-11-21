@@ -1,3 +1,5 @@
+import io
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, response
 from django.contrib.auth.models import User, auth
@@ -10,10 +12,17 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .serializers import TransactionSerializer
 from django.contrib.auth.decorators import login_required
-import io
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
-from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.forms.models import model_to_dict
+
+# Generate reference code
+def get_random_string(length):
+    # With combination of lower and upper case
+    result_str = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(length))
+    # print random string
+    return result_str
 
 # transaction api class
 class TransView(APIView):
@@ -35,8 +44,8 @@ class TransView(APIView):
         phone = request.POST['phone']
         address = request.POST['address']
         user = request.user
-        ref = get_random_string(20)
-        transaction = Transaction(user=user ,name=name, price=price, ref=ref, phone=phone, address=address)
+        # return JsonResponse(  get_random_string(20) , safe=False)
+        transaction = Transaction(user=user ,name=name, price=price, ref=f"{get_random_string(20)}", phone=phone, address=address)
         # transaction.save()
  
         serializer = TransactionSerializer(transaction)
@@ -51,18 +60,13 @@ class TransView(APIView):
         else:
             return Response(serializer.errors, status=400)
 
-# Generate reference code
-@login_required(login_url='/')
-def get_random_string(length):
-    # With combination of lower and upper case
-    result_str = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(length))
-    # print random string
-    return result_str
+
   
 # generate pdf on donload
 def generate_pdf(id, download):
     transaction = Transaction.objects.get(pk=id)
     data = {
+            'id': transaction.id, 
             'name': transaction.name, 
             'ref': transaction.ref,
             'address': transaction.address,
@@ -85,6 +89,7 @@ def generate_pdf(id, download):
     return HttpResponse("Not found")
 
     
+# download reciept for transaction
 @login_required(login_url='/')
 def download_receipt(request, id):
         download = request.GET.get("download")
@@ -106,7 +111,6 @@ def dashboard(request):
 # create transaction with form in user dashboard
 @login_required(login_url='/')
 def create_transaction(request):
-    print(request.user)
     if request.method == 'POST':
         name = request.POST['name']
         price = request.POST['price']
@@ -118,11 +122,13 @@ def create_transaction(request):
             return redirect('dashboard')
         else:
             user = request.user
-            transaction = Transaction(user=user ,name=name, price=price, ref=get_random_string(20))
+            transaction = Transaction(user=user ,name=name, price=price, ref=f"{get_random_string(20)}", phone=phone, address=address)
             messages.info(request, 'Your transaction has been created successfully')
             transaction.save()
             return redirect('dashboard')
-        
+    else:
+        messages.info(request, 'Wrong method called')
+        return redirect('dashboard')
     return render(request, 'dashboard.html')
 
 # create a new non admin account
