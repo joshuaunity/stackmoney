@@ -1,5 +1,4 @@
 import io
-
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, response
 from django.contrib.auth.models import User, auth
@@ -7,24 +6,32 @@ from django.contrib import messages
 from .models import Transaction
 import random, string
 from stackmoney.utils import render_to_pdf 
+# incase and underscore shows on the restframework imports 
+# and u have django and the django restframework modules or package 
+# then u can ignore the underline
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .serializers import TransactionSerializer
-from django.contrib.auth.decorators import login_required
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
-from django.http import JsonResponse
-from django.forms.models import model_to_dict
+from .serializers import TransactionSerializer
+from django.contrib.auth.decorators import login_required
+from .forms import UserForm
 
-# Generate reference code
+
+
+
+# Generate reference code for new transaction
 def get_random_string(length):
     # With combination of lower and upper case
     result_str = ''.join(random.choice(string.ascii_letters + string.digits) for i in range(length))
-    # print random string
     return result_str
 
-# transaction api class
+
+
+
+
+# transaction api class for both fethcing and creating new transaction
 class TransView(APIView):
     
     permission_classes = (
@@ -37,7 +44,7 @@ class TransView(APIView):
         serializer = TransactionSerializer(transactions, many=True)
         return Response(serializer.data)
         
-    # create a transaction under the current user
+    # create a new transaction under the current user
     def post(self, request, *args, **kwargs):
         name = request.POST['name']
         price = request.POST['price']
@@ -46,8 +53,6 @@ class TransView(APIView):
         user = request.user
         # return JsonResponse(  get_random_string(20) , safe=False)
         transaction = Transaction(user=user ,name=name, price=price, ref=f"{get_random_string(20)}", phone=phone, address=address)
-        # transaction.save()
- 
         serializer = TransactionSerializer(transaction)
         content = JSONRenderer().render(serializer.data)
         stream = io.BytesIO(content)
@@ -61,8 +66,10 @@ class TransView(APIView):
             return Response(serializer.errors, status=400)
 
 
-  
-# generate pdf on donload
+
+
+
+# function to generate pdf on donload button clicked
 def generate_pdf(id, download):
     transaction = Transaction.objects.get(pk=id)
     data = {
@@ -88,13 +95,16 @@ def generate_pdf(id, download):
         return response
     return HttpResponse("Not found")
 
-    
+
+
+
+
 # download reciept for transaction
 @login_required(login_url='/')
 def download_receipt(request, id):
-        download = request.GET.get("download")
-        if download:
-            return generate_pdf(id=id, download=True)
+    download = request.GET.get("download")
+    if download:
+        return generate_pdf(id=id, download=True)
     #  domain = Site.objects.get_current().domain
     #  url = 'http://{domain}/download/{id}'.format(domain=domain)
     
@@ -102,11 +112,20 @@ def download_receipt(request, id):
 def index(request):
     return render(request, 'index.html')
 
+
+
+
+
+# dashboard page to create and see all transcations
 @login_required(login_url='/')
 def dashboard(request):
     user = request.user
-    transactions = Transaction.objects.filter(user_id=user.id)
+    transactions = Transaction.objects.filter(user_id=user.id).order_by('-created_at')
     return render(request, 'dashboard.html', {'transactions': transactions})
+
+
+
+
 
 # create transaction with form in user dashboard
 @login_required(login_url='/')
@@ -131,38 +150,45 @@ def create_transaction(request):
         return redirect('dashboard')
     return render(request, 'dashboard.html')
 
+
+
+
+
 # create a new non admin account
 def signup(request):
     
     if request.method == 'POST':
         username = request.POST['username']
+        firstname = request.POST['firstname']
+        lastname = request.POST['lastname']
+        # phone = request.POST['phone']
         email = request.POST['email']
         password = request.POST['password']
         confirmpassword = request.POST['confirmpassword']
-
-        if User.objects.filter(username=username).exists():
-            messages.info(request, 'Username already used')
-            return redirect('signup')
-        elif username == "":
-            messages.info(request, 'fill in your username')
-            return redirect('signup')
-        elif User.objects.filter(email=email).exists():
-            messages.info(request, 'Email already used or you didnt fill in your email')
-            return redirect('signup')
-        elif email == "":
-            messages.info(request, 'Fill in your email')
-            return redirect('signup')
-        else:
+        
+        formdata = UserForm(request.POST)
+        
+        if formdata.is_valid(): 
             if password == confirmpassword:
-                user = User.objects.create_user(username=username, email=email, password=password)
+                user = formdata.save(commit = False)
+                user = User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password)
+                user.save()
                 messages.info(request, 'Your account has been created successfully')
-                user.save();
                 return redirect('dashboard')
             else:
                 messages.info(request, 'Passoword does not match')
-                return redirect('signup')
-    else:
-        return render(request, 'signup.html')
+                return redirect('login')
+        else:
+            # Redirect back to the same page if the data
+            # was invalid
+            messages.info(request, 'Something went wrong')
+            return redirect('signup')
+    return render(request, 'signup.html')
+            
+            
+            
+            
+            
 # login in exsiting user
 def login(request):
     if request.method == 'POST':
@@ -181,6 +207,10 @@ def login(request):
             return redirect('index')
     
     return render(request, '/')
+
+
+
+
 
 # logout out currently login in user
 def logout(request):

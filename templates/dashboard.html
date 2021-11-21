@@ -45,13 +45,12 @@
                                 class="nav_name">Files</span> </a> <a href="#" class="nav_link"> <i
                                 class='bx bx-bar-chart-alt-2 nav_icon'></i> <span class="nav_name">Stats</span> </a>
                     </div>
-                </div> <a href="#" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
+                </div> <a href="logout" class="nav_link"> <i class='bx bx-log-out nav_icon'></i> <span
                         class="nav_name">SignOut</span> </a>
             </nav>
         </div>
         <!--Container Main start-->
         <div class="container height-100">
-            <!-- <h4 align="center" class="pt-4 fw-bolder">Dashboard</h4> -->
 
             <div class="col-4 center" style="margin-top: 10%;">
                 {% for message in messages %}
@@ -60,7 +59,7 @@
                 </div>
                 {% endfor %}
                 <div class="text-center shadow-sm p-5 rounded" style="background-color: var(--first-color);">
-                    <h3 class="text-white">Hi, {{user.username}} will you like to create a new transaction</h3>
+                    <h3 class="text-white">Hi {{user.username}}, <br> Will you like to create a new transaction</h3>
                     <button type="button" class="btn site-btn btn-lg border border-2" data-bs-toggle="modal"
                         data-bs-target="#transactionModal">
                         Create Transaction <i class="bi bi-plus"></i>
@@ -83,38 +82,53 @@
                                     style="color: var(--first-color); -webkit-text-stroke: 0.5px; padding-right: 12px;"></i>
                             </a>
 
-                            <!-- <a href="download/{{transaction.id}}?download=true" style="display: none;" class="btn2" id="multiclick">
-                            </a> -->
-                            <i class="bi bi-info-circle" title="Info"
-                                style="color: var(--first-color); -webkit-text-stroke: 0.5px;"></i>
+                            <a href="#" class="btn2" data-bs-toggle="modal"
+                                data-bs-target="#{{transaction.ref}}transactionInfo">
+                                <i class="bi bi-info-circle" title="Info"
+                                    style="color: var(--first-color); -webkit-text-stroke: 0.5px;"></i>
+                            </a>
                         </div>
                     </div>
+
+                    <!-- Modal to view transaction info -->
+                    <div class="modal fade" id="{{transaction.ref}}transactionInfo" tabindex="-1"
+                        aria-labelledby="view{{transaction.ref}}transactionInfoLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="view{{transaction.ref}}transactionInfoLabel">Transaction
+                                        Info</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <span> <strong>Item Name:</strong> {{transaction.name}} </span> <br>
+                                    <span> <strong>Item Price:</strong> {{transaction.price}} </span> <br>
+                                    <span> <strong>Transaction Reference:</strong> {{transaction.ref}} </span> <br>
+                                    <span> <strong>Address:</strong> {{transaction.address}} </span> <br>
+                                    <span> <strong>Phone:</strong> {{transaction.phone}} </span> <br>
+                                    <span> <strong>Transaction Date:</strong> {{transaction.created_at|date:'Y-m-d'}}
+                                    </span>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <a class="btn site-btn" href="download/{{transaction.id}}?download=true">Download
+                                        Reciept</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
                     {% endfor %}
-
-                    <!-- <script src="">
-
-                        const link = document.getElementById('multiclick');
-
-                        function iconClick() {
-                            console.log("worked");
-                            debug.log("worked");
-                            // link.click();
-                            // alert('worked' + i);
-
-
-                            // for (let i = 0; i < 3; i++) {
-                            //     alert('worked' + i);
-                            //     link.click();
-                            // }
-                        }
-                    </script> -->
 
                 </div>
             </div>
         </div>
 
 
-        <!-- Modal -->
+        <!-- Modal to create new transaction -->
         <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel"
             aria-hidden="true">
             <div class="modal-dialog">
@@ -132,7 +146,7 @@
                                 <input type="text" name="name" class="form-control" id="itemName"
                                     aria-describedby="emailHelp">
                             </div>
-                            <!-- <div class="mb-3">
+                            <div class="mb-3">
                                 <label for="Phone" class="form-label">Phone number</label>
                                 <input type="number" name="phone" class="form-control" id="Phone"
                                     aria-describedby="emailHelp">
@@ -141,7 +155,7 @@
                                 <label for="Address" class="form-label">Address</label>
                                 <input type="text" name="address" class="form-control" id="Address"
                                     aria-describedby="emailHelp">
-                            </div> -->
+                            </div>
                             <div class="mb-3">
                                 <label for="inputPrice" class="form-label">Price</label>
                                 <input type="number" name="price" class="form-control" id="inputPrice">
@@ -153,6 +167,7 @@
                 </div>
             </div>
         </div>
+
 
         <!--Container Main end-->
         <script type='text/javascript'
