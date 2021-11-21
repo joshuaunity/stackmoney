@@ -87,10 +87,10 @@ def generate_pdf(id, download):
     if pdf:
         response = HttpResponse(pdf, content_type='application/pdf')
         filename = f"{data['name']}_%s.pdf" %("Receipt")
-        content = "inline; filename='%s'" %(filename)
+        content = "inline; filename=%s" %(filename)
         # download = req.GET.get("download")
         if download:
-            content = "attachment; filename='%s'" %(filename)
+            content = "attachment; filename=%s" %(filename)
         response['Content-Disposition'] = content
         return response
     return HttpResponse("Not found")
