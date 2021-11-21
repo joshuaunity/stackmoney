@@ -78,20 +78,20 @@
                     <div class="col-12 site-border border border-2 d-flex justify-content-between p-2 mb-2 rounded">
                         <span> {{transaction.name}} | {{transaction.ref}}</span>
                         <div>
-                            <a href="#" onclick="iconClick()">
-                                <i class="bi bi-download" title="Download Reciepts" class="btn1"
+                            <a href="download/{{transaction.id}}?download=true">
+                                <i class="bi bi-download" title="Download Reciepts"
                                     style="color: var(--first-color); -webkit-text-stroke: 0.5px; padding-right: 12px;"></i>
                             </a>
 
-                            <a href="download/{{transaction.id}}?download=true" style="display: none;" class="btn2" id="multiclick">
-                            </a>
+                            <!-- <a href="download/{{transaction.id}}?download=true" style="display: none;" class="btn2" id="multiclick">
+                            </a> -->
                             <i class="bi bi-info-circle" title="Info"
                                 style="color: var(--first-color); -webkit-text-stroke: 0.5px;"></i>
                         </div>
                     </div>
                     {% endfor %}
 
-                    <script src="">
+                    <!-- <script src="">
 
                         const link = document.getElementById('multiclick');
 
@@ -107,7 +107,7 @@
                             //     link.click();
                             // }
                         }
-                    </script>
+                    </script> -->
 
                 </div>
             </div>
@@ -132,7 +132,7 @@
                                 <input type="text" name="name" class="form-control" id="itemName"
                                     aria-describedby="emailHelp">
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="Phone" class="form-label">Phone number</label>
                                 <input type="number" name="phone" class="form-control" id="Phone"
                                     aria-describedby="emailHelp">
@@ -141,7 +141,7 @@
                                 <label for="Address" class="form-label">Address</label>
                                 <input type="text" name="address" class="form-control" id="Address"
                                     aria-describedby="emailHelp">
-                            </div>
+                            </div> -->
                             <div class="mb-3">
                                 <label for="inputPrice" class="form-label">Price</label>
                                 <input type="number" name="price" class="form-control" id="inputPrice">
