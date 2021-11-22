@@ -1,4 +1,6 @@
 {% load static %}
+{% load bootstrap5 %}
+
 <!doctype html>
 <html>
 
@@ -37,6 +39,7 @@
     <div class="cotainer">
         <div class="col-6 center">
             <h3 style="margin-top: 10%;">Log In</h3>
+            {% bootstrap_messages %}
             <form method="POST" action="login">
                 {% csrf_token %}
                 <div class="mb-3">
