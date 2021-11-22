@@ -43,7 +43,7 @@ class UserForm(ModelForm):
 
 class TransactionForm(ModelForm):
     name = forms.CharField(required=True, error_messages={'required': 'Please put in an item name'})
-    price = forms.CharField(required=True,widget=forms.TextInput(attrs={'class':'form-control' , 'autocomplete': 'off','pattern':'[0-9]+', 'title':'Enter numbers Only '}))
+    price = forms.IntegerField(required=True,widget=forms.TextInput(attrs={'class':'form-control' , 'autocomplete': 'off','pattern':'[0-9]+', 'title':'Enter numbers Only '}))
     # ref = forms.CharField(required=True)
     address = forms.CharField(required=True, error_messages={'required': 'Please fill in your address'})
     phone = PhoneField(blank=True, error_messages={'required': 'Please put in a phone number'})
@@ -72,14 +72,14 @@ class TransactionForm(ModelForm):
         if name == "":
             self._errors['name'] = self.error_class([
                 'name is required'])
-        if price <= 0:
+        if price == 0:
             self._errors['price'] = self.error_class([
-                'price is required'])  
+                'price should be at least 1'])  
         if address == "":
             self._errors['address'] = self.error_class([
                 'address is required'])
-        if phone <= 0:
+        if phone == 0:
             self._errors['phone'] = self.error_class([
-                'phone is required'])
+                'phone cannot be 0'])
         # return any errors if found
         return self.cleaned_data
