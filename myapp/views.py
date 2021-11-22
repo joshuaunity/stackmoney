@@ -17,6 +17,8 @@ from rest_framework.renderers import JSONRenderer
 from .serializers import TransactionSerializer
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm
+from .forms import TransactionForm
+import urllib.request
 
 
 
@@ -103,10 +105,16 @@ def generate_pdf(id, download):
 @login_required(login_url='/')
 def download_receipt(request, id):
     download = request.GET.get("download")
+    # domain = Site.objects.get_current().domain
+    # url = 'http://{domain}/download/{id}'.format(domain=domain)
+                                                 
     if download:
         return generate_pdf(id=id, download=True)
-    #  domain = Site.objects.get_current().domain
-    #  url = 'http://{domain}/download/{id}'.format(domain=domain)
+
+    
+    
+    
+    
     
 # home or index page, it also serves as the login page
 def index(request):
@@ -120,8 +128,9 @@ def index(request):
 @login_required(login_url='/')
 def dashboard(request):
     user = request.user
+    form = TransactionForm() 
     transactions = Transaction.objects.filter(user_id=user.id).order_by('-created_at')
-    return render(request, 'dashboard.html', {'transactions': transactions})
+    return render(request, 'dashboard.html', {'transactions': transactions, 'form': form})
 
 
 
@@ -136,20 +145,22 @@ def create_transaction(request):
         phone = request.POST['phone']
         address = request.POST['address']
         
-        if name == "" or price == "":
-            messages.info(request, 'Name or Price not filled')
+        formdata = TransactionForm(request.POST)
+        
+        if formdata.is_valid(): 
+            transaction_data = formdata.save(commit = False)
+            transaction = Transaction(user=request.user ,name=name, price=price, ref=f"{get_random_string(20)}", phone=phone, address=address)
+            # messages.info(request, 'Your transaction has been created successfully')
+            transaction.save()
+            # return HttpResponse("form submitted successfully")
+            messages.info(request, 'Your transaction has been created successfully')
             return redirect('dashboard')
         else:
-            user = request.user
-            transaction = Transaction(user=user ,name=name, price=price, ref=f"{get_random_string(20)}", phone=phone, address=address)
-            messages.info(request, 'Your transaction has been created successfully')
-            transaction.save()
-            return redirect('dashboard')
+            return render(request, "dashboard.html", {'form':formdata}) 
     else:
-        messages.info(request, 'Wrong method called')
-        return redirect('dashboard')
-    return render(request, 'dashboard.html')
-
+        form = TransactionForm()  
+        return render(request, 'dashboard.html', {'form':form})
+    
 
 
 
@@ -159,8 +170,8 @@ def signup(request):
     
     if request.method == 'POST':
         username = request.POST['username']
-        firstname = request.POST['firstname']
-        lastname = request.POST['lastname']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
         # phone = request.POST['phone']
         email = request.POST['email']
         password = request.POST['password']
@@ -169,22 +180,16 @@ def signup(request):
         formdata = UserForm(request.POST)
         
         if formdata.is_valid(): 
-            if password == confirmpassword:
-                user = formdata.save(commit = False)
-                user = User.objects.create_user(username=username, first_name=firstname, last_name=lastname, email=email, password=password)
-                user.save()
-                messages.info(request, 'Your account has been created successfully')
-                return redirect('dashboard')
-            else:
-                messages.info(request, 'Passoword does not match')
-                return redirect('login')
+            user_data = formdata.save(commit = False)
+            user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
+            user.save()
+            messages.info(request, 'Your account has been created successfully')
+            return redirect('/')
         else:
-            # Redirect back to the same page if the data
-            # was invalid
-            messages.info(request, 'Something went wrong')
-            return redirect('signup')
-    return render(request, 'signup.html')
-            
+            return render(request, "signup.html", {'form':formdata}) 
+    else:
+        form = UserForm()  
+        return render(request, 'signup.html', {'form':form})
             
             
             
