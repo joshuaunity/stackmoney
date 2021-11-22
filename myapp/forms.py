@@ -12,7 +12,7 @@ class UserForm(ModelForm):
     last_name = forms.CharField(required=True, error_messages={'required': 'Please put in your last_name'})
     email = forms.EmailField(required=True, error_messages={'required': 'Email is required'})
     password = forms.CharField(max_length=16, widget=forms.PasswordInput, error_messages={'required': 'Password is required'})
-    confirmpassword = forms.CharField(max_length=16, widget=forms.PasswordInput, error_messages={'required': 'Confirm Password is required'})
+    confirm_password = forms.CharField(max_length=16, widget=forms.PasswordInput, error_messages={'required': 'Confirm Password is required'})
     
     
     class Meta:
@@ -31,11 +31,11 @@ class UserForm(ModelForm):
         last_name = self.cleaned_data.get('last_name')
         email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
-        confirmpassword = self.cleaned_data.get('confirmpassword')
+        confirm_password = self.cleaned_data.get('confirm_password')
         
  
         # conditions to be met for the username length
-        if password != confirmpassword:
+        if password != confirm_password:
             self._errors['password'] = self.error_class([
                 'password and confirm pasword do not match'])
         # return any errors if found
