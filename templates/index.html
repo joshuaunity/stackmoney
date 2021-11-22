@@ -25,9 +25,9 @@
 
             <ul class="nav justify-content-end">
                 <li class="nav-item">
-                    <button type="button" class="btn btn-primary">Sign Up</button>
+                    <a type="button" href="signup" class="btn btn-primary">Sign Up</a>
 
-                    <button type="button" class="btn btn-primary">Log In</button>
+                    <a type="button" href="/" class="btn btn-primary">Log In</a>
                 </li>
             </ul>
 
@@ -41,7 +41,8 @@
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="inputUsername" class="form-label">Username</label>
-                    <input type="text" name="username"  class="form-control" id="inputUsername" aria-describedby="emailHelp">
+                    <input type="text" name="username" class="form-control" id="inputUsername"
+                        aria-describedby="emailHelp">
                     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div class="mb-3">
