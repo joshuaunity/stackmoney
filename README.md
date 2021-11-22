@@ -1,5 +1,5 @@
 # stackmoney
-This is a webapp which generates transaction for items bought. User can also download reciept for each of these tranasctions.
+This is a webapp which generates transaction for items bought. User can also download reciept for each of these transactions.
 
 ## Other things you need to know:
 To test out the api's you need to download Insomnia to run the endpoints, you can download insomnia by following the url below.
