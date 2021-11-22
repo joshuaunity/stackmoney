@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User, auth
 from .models import Transaction
 from django import forms
-from phone_field import PhoneField
+from django.core.validators import RegexValidator
 import re
 
 # User/sign up form validation class 
@@ -46,7 +46,8 @@ class TransactionForm(ModelForm):
     price = forms.IntegerField(required=True,widget=forms.TextInput(attrs={'class':'form-control' , 'autocomplete': 'off','pattern':'[0-9]+', 'title':'Enter numbers Only '}))
     # ref = forms.CharField(required=True)
     address = forms.CharField(required=True, error_messages={'required': 'Please fill in your address'})
-    phone = forms.IntegerField(required=True,widget=forms.TextInput(attrs={'class':'form-control' , 'autocomplete': 'off','pattern':'[0-9]+', 'title':'Enter numbers Only '}))
+    phone = forms.CharField(required=True ,error_messages={'incomplete': 'Enter a phone number.'}, 
+                               validators=[RegexValidator(r'^[0-9]+$', 'Enter a valid phone number.')])
 
     # phone = forms.RegexField(regex=r'^\+?1?\d{9,15}$', 
     #                         error_message = ("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."))
