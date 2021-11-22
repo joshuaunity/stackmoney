@@ -6,6 +6,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 urlpatterns = [
     # landing page and also contains login 
     path('', views.index, name='index'),
+    path('accounts/login', views.index, name='index'),
     # login in the user
     path('login', views.login, name='login'),
     # create new user

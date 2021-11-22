@@ -1,4 +1,5 @@
 {% load static %}
+{% load bootstrap5 %}
 <!doctype html>
 <html>
 
@@ -38,53 +39,12 @@
         <div class="col-6 center">
             <h3 style="margin-top: 10%;">Sign Up</h3>
 
-            {% for message in messages %}
-            <div class="alert alert-secondary" role="alert">
-                {{ message }}
-            </div>
-            {% endfor %}
-
             <form method="POST" action="signup">
                 {% csrf_token %}
-                <div class="mb-3">
-                    <label for="inputUsername" class="form-label">Username</label>
-                    <input type="text" name="username" class="form-control" id="inputUsername">
-                </div>
+                {% bootstrap_messages %}
 
-                <div class="row">
-                    <div class="mb-3 col-md-6">
-                        <label for="inputFirstname" class="form-label">firstname</label>
-                        <input type="text" name="firstname" class="form-control" id="inputFirstname">
-                    </div>
+                {% bootstrap_form form %}
 
-                    <div class="mb-3 col-md-6">
-                        <label for="inputLastname" class="form-label">lastname</label>
-                        <input type="text" name="lastname" class="form-control" id="inputLastname">
-                    </div>
-                </div>
-<!-- 
-                <div class="mb-3">
-                    <label for="inputPhone" class="form-label">phone</label>
-                    <input type="text" name="phone" class="form-control" id="inputPhone">
-                </div> -->
-
-                <div class="mb-3">
-                    <label for="inputEmail" class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
-                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                </div>
-
-                <div class="row">
-                    <div class="mb-3 col-md-6">
-                        <label for="inputpassword" class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" id="inputpassword">
-                    </div>
-
-                    <div class="mb-3 col-md-6">
-                        <label for="inputconfirmpassword" class="form-label">Confirm Password</label>
-                        <input type="password" name="confirmpassword" class="form-control" id="inputconfirmpassword">
-                    </div>
-                </div>
 
                 <div id="emailHelp" class="form-text pb-2">I already have an account <a href="/">Log In</a>.</div>
 
