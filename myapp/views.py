@@ -149,7 +149,7 @@ def create_transaction(request):
         
         if formdata.is_valid(): 
             transaction_data = formdata.save(commit = False)
-            transaction = Transaction(user=request.user ,name=name, price=price, ref=f"{get_random_string(20)}", phone=phone, address=address)
+            transaction = Transaction(user=request.user ,name=name, price=price, ref=f"st{get_random_string(20)}", phone=phone, address=address)
             # messages.info(request, 'Your transaction has been created successfully')
             transaction.save()
             # return HttpResponse("form submitted successfully")
