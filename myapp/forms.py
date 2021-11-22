@@ -72,13 +72,13 @@ class TransactionForm(ModelForm):
         if name == "":
             self._errors['name'] = self.error_class([
                 'name is required'])
-        if price == 0:
+        if price <= 0:
             self._errors['price'] = self.error_class([
                 'price is required'])  
         if address == "":
             self._errors['address'] = self.error_class([
                 'address is required'])
-        if phone == 0:
+        if phone <= 0:
             self._errors['phone'] = self.error_class([
                 'phone is required'])
         # return any errors if found
