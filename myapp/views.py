@@ -156,7 +156,8 @@ def create_transaction(request):
             messages.info(request, 'Your transaction has been created successfully')
             return redirect('dashboard')
         else:
-            return render(request, "dashboard.html", {'form':formdata}) 
+            transactions = Transaction.objects.filter(user_id=request.user.id).order_by('-created_at')
+            return render(request, "dashboard.html", {'form':formdata , 'transactions': transactions}) 
     else:
         form = TransactionForm()  
         return render(request, 'dashboard.html', {'form':form})

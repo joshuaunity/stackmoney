@@ -46,7 +46,8 @@ class TransactionForm(ModelForm):
     price = forms.IntegerField(required=True,widget=forms.TextInput(attrs={'class':'form-control' , 'autocomplete': 'off','pattern':'[0-9]+', 'title':'Enter numbers Only '}))
     # ref = forms.CharField(required=True)
     address = forms.CharField(required=True, error_messages={'required': 'Please fill in your address'})
-    phone = PhoneField(blank=True, error_messages={'required': 'Please put in a phone number'})
+    phone = forms.IntegerField(required=True,widget=forms.TextInput(attrs={'class':'form-control' , 'autocomplete': 'off','pattern':'[0-9]+', 'title':'Enter numbers Only '}))
+
     # phone = forms.RegexField(regex=r'^\+?1?\d{9,15}$', 
     #                         error_message = ("Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed."))
     
@@ -80,6 +81,6 @@ class TransactionForm(ModelForm):
                 'address is required'])
         if phone == 0:
             self._errors['phone'] = self.error_class([
-                'phone cannot be 0'])
+                'phone cannot be 0 or have a - or + sign'])
         # return any errors if found
         return self.cleaned_data
