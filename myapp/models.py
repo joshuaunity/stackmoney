@@ -8,12 +8,12 @@ class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=30) 
     price = models.IntegerField(null=True) 
-    ref = models.CharField(max_length=30) 
     phone = models.IntegerField(null=True) 
     ref = models.TextField(max_length=30, null=True) 
-    address = models.CharField(max_length=500, null=True)
+    address = models.TextField(max_length=2000, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.nameedits
+    
