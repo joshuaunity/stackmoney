@@ -3,7 +3,6 @@ from django.contrib.auth.models import User, auth
 from .models import Transaction
 from django import forms
 from django.core.validators import RegexValidator
-import re
 
 # User/sign up form validation class 
 class UserForm(ModelForm):
