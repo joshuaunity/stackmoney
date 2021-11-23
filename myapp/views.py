@@ -136,7 +136,7 @@ def dashboard(request):
 
 
 
-# create transaction with form in user dashboard
+# create transaction with form in user's dashboard
 @login_required(login_url='/')
 def create_transaction(request):
     if request.method == 'POST':

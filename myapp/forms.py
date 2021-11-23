@@ -3,7 +3,6 @@ from django.contrib.auth.models import User, auth
 from .models import Transaction
 from django import forms
 from django.core.validators import RegexValidator
-import re
 
 # User/sign up form validation class 
 class UserForm(ModelForm):
@@ -74,13 +73,13 @@ class TransactionForm(ModelForm):
         if name == "":
             self._errors['name'] = self.error_class([
                 'name is required'])
-        if price == 0:
+        if price <= 0:
             self._errors['price'] = self.error_class([
                 'price should be at least 1'])  
         if address == "":
             self._errors['address'] = self.error_class([
                 'address is required'])
-        if phone == 0:
+        if phone <= 0:
             self._errors['phone'] = self.error_class([
                 'phone cannot be 0 or have a - or + sign'])
         # return any errors if found
