@@ -149,14 +149,15 @@ def create_transaction(request):
         
         if formdata.is_valid(): 
             transaction_data = formdata.save(commit = False)
-            transaction = Transaction(user=request.user ,name=name, price=price, ref=f"{get_random_string(20)}", phone=phone, address=address)
+            transaction = Transaction(user=request.user ,name=name, price=price, ref=f"st{get_random_string(20)}", phone=phone, address=address)
             # messages.info(request, 'Your transaction has been created successfully')
             transaction.save()
             # return HttpResponse("form submitted successfully")
             messages.info(request, 'Your transaction has been created successfully')
             return redirect('dashboard')
         else:
-            return render(request, "dashboard.html", {'form':formdata}) 
+            transactions = Transaction.objects.filter(user_id=request.user.id).order_by('-created_at')
+            return render(request, "dashboard.html", {'form':formdata , 'transactions': transactions}) 
     else:
         form = TransactionForm()  
         return render(request, 'dashboard.html', {'form':form})
@@ -175,7 +176,7 @@ def signup(request):
         # phone = request.POST['phone']
         email = request.POST['email']
         password = request.POST['password']
-        confirmpassword = request.POST['confirmpassword']
+        confirm_password = request.POST['confirm_password']
         
         formdata = UserForm(request.POST)
         
