@@ -22,7 +22,7 @@ urlpatterns = [
     
     #***
     #***
-    # API PATHS ***********
+    # API PATHS ************
     #***
     #***
     # API to create a transaction
