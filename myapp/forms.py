@@ -24,7 +24,7 @@ class UserForm(ModelForm):
         # data from the form is fetched using super function
         super(UserForm, self).clean()
          
-        # extract the username and text field from the data
+        # extract the username and text field from the dataa
         username = self.cleaned_data.get('username')
         first_name = self.cleaned_data.get('first_name')
         last_name = self.cleaned_data.get('last_name')
