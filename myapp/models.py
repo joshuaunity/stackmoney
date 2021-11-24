@@ -9,11 +9,10 @@ class Transaction(models.Model):
     name = models.CharField(max_length=30) 
     price = models.IntegerField(null=True) 
     phone = models.IntegerField(null=True) 
-    ref = models.TextField(max_length=30, null=True) 
+    ref = models.TextField(max_length=2000, null=True) 
     address = models.TextField(max_length=2000, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.nameedits
-    
+        return self.name
