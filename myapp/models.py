@@ -10,8 +10,8 @@ class Transaction(models.Model):
     price = models.IntegerField(null=True) 
     ref = models.CharField(max_length=30) 
     phone = models.IntegerField(null=True) 
-    ref = models.TextField(max_length=30, null=True) 
-    address = models.TextField(max_length=30, null=True)
+    ref = models.TextField(max_length=300, null=True) 
+    address = models.TextField(max_length=300, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
